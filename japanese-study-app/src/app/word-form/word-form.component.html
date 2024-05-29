@@ -1,0 +1,54 @@
+<div class="max-w-md mx-auto px-4 py-8 bg-white shadow-lg rounded-lg">
+    <form [formGroup]="wordForm" (ngSubmit)="submit()">
+        <div class="mb-4">
+            <label for="jpWord" class="block text-gray-700 font-bold mb-2">Japanese Word</label>
+            <input id="jpWord" formControlName="jpWord" type="text"
+                class="form-input rounded-md w-full py-2 px-3 text-gray-700 border border-gray-300 focus:outline-none focus:border-indigo-500"
+                required>
+            <div *ngIf="wordForm.get('jpWord')?.invalid && wordForm.get('jpWord')?.touched"
+                class="text-red-500 text-xs mt-1">Japanese word is required.
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <label for="pronunciation" class="block text-gray-700 font-bold mb-2">Pronunciation</label>
+            <input id="pronunciation" formControlName="pronunciation" type="text"
+                class="form-input rounded-md w-full py-2 px-3 text-gray-700 border border-gray-300 focus:outline-none focus:border-indigo-500"
+                required>
+            <div *ngIf="wordForm.get('pronunciation')?.invalid && wordForm.get('pronunciation')?.touched"
+                class="text-red-500 text-xs mt-1">Pronunciation is required.
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <label for="enMeaning" class="block text-gray-700 font-bold mb-2">English Meaning</label>
+            <input id="enMeaning" formControlName="enMeaning" type="text"
+                class="form-input rounded-md w-full py-2 px-3 text-gray-700 border border-gray-300 focus:outline-none focus:border-indigo-500"
+                required>
+            <div *ngIf="wordForm.get('enMeaning')?.invalid && wordForm.get('enMeaning')?.touched"
+                class="text-red-500 text-xs mt-1">English meaning is required.
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <label for="thMeaning" class="block text-gray-700 font-bold mb-2">Thai Meaning</label>
+            <input id="thMeaning" formControlName="thMeaning" type="text"
+                class="form-input rounded-md w-full py-2 px-3 text-gray-700 border border-gray-300 focus:outline-none focus:border-indigo-500"
+                required>
+            <div *ngIf="wordForm.get('thMeaning')?.invalid && wordForm.get('thMeaning')?.touched"
+                class="text-red-500 text-xs mt-1">Thai meaning is required.
+            </div>
+        </div>
+
+        <div class="flex justify-center">
+            <button type="submit"
+                class="bg-indigo-500 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-indigo-600 disabled:bg-gray-500"
+                [disabled]="wordForm.invalid">Submit
+            </button>
+            <button type="button"
+                class="bg-gray-300 text-gray-700 py-2 px-4 rounded ml-2 focus:outline-none focus:shadow-outline hover:bg-gray-400"
+                (click)="cancel()">Cancel
+            </button>
+        </div>
+    </form>
+</div>

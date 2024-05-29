@@ -1,0 +1,13 @@
+<div>
+    <header class="flex flex-col justify-end bg-black h-[50px] text-white">
+        <nav class="flex justify-center gap-10 px-4">
+            <a [routerLink]="['/']" routerLinkActive="active" class="px-3"
+                [routerLinkActiveOptions]="{exact: true}">Home</a>
+            <a [routerLink]="['/list']" routerLinkActive="active" class="px-3"
+                [routerLinkActiveOptions]="{exact: true}">Word List</a>
+            <a [routerLink]="['/add']" routerLinkActive="active" class="px-3"
+                [routerLinkActiveOptions]="{exact: true}">Add Word</a>
+        </nav>
+    </header>
+    <router-outlet></router-outlet>
+</div>

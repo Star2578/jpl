@@ -1,0 +1,19 @@
+<div class="bg-slate-200 w-[100vw] h-[100vh]">
+    <div class="max-w-4xl mx-auto px-4 pt-8">
+        <div class="text-center">
+            <h1 class="text-4xl font-bold mb-4">Welcome to Japanese Study App</h1>
+            <p class="text-lg text-gray-600">A Web-app mostly for my personal use</p>
+        </div>
+    
+        <div class="my-8">
+            <div class="aspect-w-16 aspect-h-9 h-[500px]">
+                <iframe class="w-full h-full" [src]="sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/' + id)" frameborder="0"
+                    allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+        </div>
+    
+        <div class="text-center">
+            <p class="text-lg text-gray-600">Thank you for using my web!</p>
+        </div>
+    </div>
+</div>
