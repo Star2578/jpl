@@ -3,15 +3,16 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Word, WordService } from '../word.service';
 import { FormControl } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subscription, switchMap } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faPen, faTrash, faX } from '@fortawesome/free-solid-svg-icons';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-word-list',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, ReactiveFormsModule, FontAwesomeModule],
+  imports: [CommonModule, HttpClientModule, ReactiveFormsModule, FontAwesomeModule, FormsModule],
   templateUrl: './word-list.component.html',
   styleUrl: './word-list.component.css'
 })
@@ -22,6 +23,11 @@ export class WordListComponent {
   private subscriptions: Subscription[] = [];
 
   faTrash = faTrash;
+  faPen = faPen;
+  faCheck = faCheck;
+  faX = faX;
+
+  editingWord: Word | null = null;
 
   constructor(private wordService: WordService) { }
 
@@ -42,6 +48,26 @@ export class WordListComponent {
       this.words = words;
       this.filterWords(); // Apply search filtering
     });
+  }
+
+  enterEditMode(word: Word): void {
+    this.editingWord = word;
+  }
+
+  editWord(): void {
+    if (this.editingWord) {
+      this.wordService.updateWord(this.editingWord).subscribe(() => {
+        this.editingWord = null; // Exit edit mode
+        this.loadWords(); // Reload the words to reflect changes
+      });
+    }
+  }
+
+  cancelEdit() {
+    if (this.editingWord) {
+      this.editingWord = null;
+      this.loadWords();
+    }
   }
 
   confirmDelete(wordId: number): void {

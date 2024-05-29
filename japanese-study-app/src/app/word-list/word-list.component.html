@@ -13,18 +13,63 @@
                     <th class="py-2 px-4">English Meaning</th>
                     <th class="py-2 px-4">Thai Meaning</th>
                     <th class="py-2 px-4"></th>
+                    <th class="py-2 px-4"></th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let word of filteredWords" class="border-b border-gray-200">
-                    <td class="py-3 px-4">{{ word.jpWord }}</td>
-                    <td class="py-3 px-4">{{ word.pronunciation }}</td>
-                    <td class="py-3 px-4">{{ word.enMeaning }}</td>
-                    <td class="py-3 px-4">{{ word.thMeaning }}</td>
                     <td class="py-3 px-4">
-                        <button class="w-[40px] h-[40px] rounded-full hover:bg-gray-300"
-                        (click)="confirmDelete(word.id)">
+                        <ng-container *ngIf="editingWord === word; else displayWord">
+                            <input type="text" [(ngModel)]="editingWord.jpWord" />
+                        </ng-container>
+                        <ng-template #displayWord>
+                            {{ word.jpWord }}
+                        </ng-template>
+                    </td>
+                    <td class="py-3 px-4">
+                        <ng-container *ngIf="editingWord === word; else displayPronoun">
+                            <input type="text" [(ngModel)]="editingWord.pronunciation" />
+                        </ng-container>
+                        <ng-template #displayPronoun>
+                            {{ word.pronunciation }}
+                        </ng-template>
+                    </td>
+                    <td class="py-3 px-4">
+                        <ng-container *ngIf="editingWord === word; else displayenMeaning">
+                            <input type="text" [(ngModel)]="editingWord.enMeaning" />
+                        </ng-container>
+                        <ng-template #displayenMeaning>
+                            {{ word.enMeaning }}
+                        </ng-template>
+                    </td>
+                    <td class="py-3 px-4">
+                        <ng-container *ngIf="editingWord === word; else displaythMeaning">
+                            <input type="text" [(ngModel)]="editingWord.thMeaning" />
+                        </ng-container>
+                        <ng-template #displaythMeaning>
+                            {{ word.thMeaning }}
+                        </ng-template>
+                    </td>
+
+                    
+                    <td class="py-3 px-4">
+                        <button *ngIf="!editingWord" class="w-[40px] h-[40px] rounded-full hover:bg-gray-300"
+                            (click)="enterEditMode(word)">
+                            <fa-icon [icon]="faPen"></fa-icon>
+                        </button>
+                        <button *ngIf="editingWord" class="w-[40px] h-[40px] rounded-full hover:bg-gray-300"
+                            (click)="editWord()">
+                            <fa-icon [icon]="faCheck"></fa-icon>
+                        </button>
+                    </td>
+                    <td class="py-3 px-4">
+                        <button *ngIf="!editingWord" class="w-[40px] h-[40px] rounded-full hover:bg-gray-300"
+                            (click)="confirmDelete(word.id)">
                             <fa-icon [icon]="faTrash"></fa-icon>
+                        </button>
+                        <button *ngIf="editingWord" class="w-[40px] h-[40px] rounded-full hover:bg-gray-300"
+                            (click)="cancelEdit()">
+                            <fa-icon [icon]="faX"></fa-icon>
                         </button>
                     </td>
                 </tr>
