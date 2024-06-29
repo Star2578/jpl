@@ -3,13 +3,17 @@ import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
   imports: [CommonModule, FormsModule],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
-  standalone: true
+  standalone: true,
+  providers: [
+    { provide: HttpClient, useClass: HttpClient }
+  ]
 })
 export class RegisterComponent {
   username: string = '';

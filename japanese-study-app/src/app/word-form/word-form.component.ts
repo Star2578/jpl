@@ -4,6 +4,7 @@ import { WordService, Word } from '../word.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-word-form',
@@ -20,13 +21,14 @@ export class WordFormComponent implements OnInit, OnDestroy {
     thMeaning: new FormControl(null, [Validators.required]),
   });
 
-  constructor(private wordService: WordService, private router: Router) { }
+  constructor(private wordService: WordService, private router: Router, private authService: AuthService) { }
 
   ngOnInit(): void { }
 
   submit() {
     if (this.wordForm.valid) {
       const newWord: Word = this.wordForm.value;
+      newWord.userId = this.authService.getUserId();
       this.wordService.addWord(newWord).subscribe(() => {
         this.router.navigate(['/list']);
       });

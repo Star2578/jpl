@@ -8,7 +8,7 @@ using JapaneseStudyApi.Data;
 using JapaneseStudyApi.Model;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class AuthController : ControllerBase
 {
     private readonly JapaneseStudyContext _context;
@@ -73,6 +73,6 @@ public class AuthController : ControllerBase
         Console.WriteLine($"JWT Secret: {Environment.GetEnvironmentVariable("JWT_SECRET")}");
         Console.WriteLine($"Generated Token: {tokenString}");
 
-        return Ok(new { Token = tokenString });
+        return Ok(new { Id = existingUser.Id, Token = tokenString });
     }
 }

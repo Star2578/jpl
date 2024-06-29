@@ -3,13 +3,17 @@ import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
   imports: [CommonModule, FormsModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  standalone: true
+  standalone: true,
+  providers: [
+    { provide: HttpClient, useClass: HttpClient }
+  ]
 })
 export class LoginComponent {
   username: string = '';
@@ -20,7 +24,7 @@ export class LoginComponent {
   onSubmit() {
     this.authService.login(this.username, this.password).subscribe(
       () => {
-        this.router.navigate(['/word-list']);
+        this.router.navigate(['/list']);
       },
       error => {
         alert('Login failed');

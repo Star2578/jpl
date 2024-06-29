@@ -8,13 +8,14 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = 'http://localhost:5000/api/auth';
+  private baseUrl = 'http://localhost:5051/api/auth';
 
   constructor(private http: HttpClient, private router: Router) { }
 
   login(username: string, password: string): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/login`, { username, password }).pipe(
       tap(response => {
+        localStorage.setItem('id', response.id);
         localStorage.setItem('token', response.token);
       })
     );
@@ -26,9 +27,9 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('token');
-    this.router.navigate(['/login']);
+    localStorage.removeItem('id');
+    this.router.navigate(['/home']);
   }
-
 
   isLoggedIn(): boolean {
     return !!localStorage.getItem('token');
@@ -36,5 +37,9 @@ export class AuthService {
 
   getToken(): string | null {
     return localStorage.getItem('token');
+  }
+
+  getUserId(): string | null {
+    return localStorage.getItem('id');
   }
 }

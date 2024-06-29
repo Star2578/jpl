@@ -1,5 +1,10 @@
 <div>
     <header class="flex flex-col justify-end bg-black h-[50px] text-white">
+        <nav class="flex justify-end">
+            <button *ngIf="isLoggedIn()" (click)="logout()" class="px-3">Logout</button>
+            <button *ngIf="!isLoggedIn()" (click)="login()" class="px-3">Login</button>
+            <button *ngIf="!isLoggedIn()" (click)="register()" class="px-3">Register</button>
+        </nav>
         <nav class="flex justify-center gap-10 px-4">
             <a [routerLink]="['/']" routerLinkActive="active" class="px-3"
                 [routerLinkActiveOptions]="{exact: true}">Home</a>
