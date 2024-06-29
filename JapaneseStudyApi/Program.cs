@@ -1,8 +1,12 @@
 using JapaneseStudyApi.Data;
+using JapaneseStudyApi.Quartz;
+using JapaneseStudyApi.Quartz.Interface;
+using JapaneseStudyApi.Quartz.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Quartz;
 using System;
 using System.Text;
 
@@ -86,6 +90,19 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+// Add Quartz.NET
+builder.Services.AddQuartz(q =>
+{
+    q.UseMicrosoftDependencyInjectionJobFactory();
+});
+
+builder.Services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
+
+builder.Services.AddSingleton<ExampleTask>();
+builder.Services.AddSingleton<AnotherTask>();
+
+builder.Services.AddSingleton<TaskInjection>();
+
 var app = builder.Build();
 
 // Enable Swagger UI
@@ -101,5 +118,8 @@ app.UseCors("AllowAngularApp");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+
+var taskInjection = app.Services.GetRequiredService<TaskInjection>();
+await taskInjection.RunStartupTasksAsync();
 
 app.Run();
