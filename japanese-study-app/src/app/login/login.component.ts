@@ -18,15 +18,21 @@ import { HttpClient } from '@angular/common/http';
 export class LoginComponent {
   username: string = '';
   password: string = '';
+  loading: boolean = false;
 
   constructor(private authService: AuthService, private router: Router) { }
 
   onSubmit() {
+    this.loading = true;
     this.authService.login(this.username, this.password).subscribe(
       () => {
-        this.router.navigate(['/list']);
+        setTimeout(() => {
+          this.loading = false;
+          this.router.navigate(['/list']);
+        }, 1000)
       },
       error => {
+        this.loading = false;
         alert('Login failed');
       }
     );

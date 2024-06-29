@@ -18,16 +18,24 @@ import { HttpClient } from '@angular/common/http';
 export class RegisterComponent {
   username: string = '';
   password: string = '';
+  loading: boolean = false;
+  progress: number = 0;
 
   constructor(private authService: AuthService, private router: Router) { }
 
   onSubmit() {
+    this.loading = true;
     this.authService.register(this.username, this.password).subscribe(
       () => {
-        this.router.navigate(['/login']);
+        setTimeout(() => {
+          this.loading = false;
+          this.router.navigate(['/login']);
+        }, 1000)
       },
-      error => {
-        alert('Registration failed');
+      (error) => {
+        this.loading = false;
+        console.error('Registration error:', error);
+        // Handle error (e.g., show error message)
       }
     );
   }

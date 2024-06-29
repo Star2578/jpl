@@ -8,8 +8,8 @@ import { AuthGuard } from './auth.guard';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
-    { path: 'add', component: WordFormComponent },
-    { path: 'list', component: WordListComponent },
+    { path: 'add', component: WordFormComponent, canActivate: [AuthGuard] }, // guard
+    { path: 'list', component: WordListComponent, canActivate: [AuthGuard] }, // guard
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     { path: '**', redirectTo: '/home' } // Handle 404 or fallback
